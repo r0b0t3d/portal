@@ -1,5 +1,5 @@
 {
-  "name": "portal",
+  "name": "@r0b0t3d/portal",
   "version": "0.1.0",
   "description": "Render everything on top with Portal",
   "source": "./src/index.tsx",
