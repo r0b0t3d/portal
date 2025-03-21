@@ -1,6 +1,6 @@
 {
   "name": "@r0b0t3d/portal",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Render everything on top with Portal",
   "source": "./src/index.ts",
   "react-native": "./src/index.ts",
