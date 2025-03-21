@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { atom, useAtomValue } from 'jotai';
+import { atom, Provider, useAtomValue } from 'jotai';
 
 const portalsAtom = atom<{ key: string; children: React.ReactNode }[]>([]);
 export const addUpdatePortalAtom = atom(
@@ -29,14 +29,18 @@ export const removePortalAtom = atom(null, (get, set, key: string) => {
 export const Host = () => {
   const portals = useAtomValue(portalsAtom);
 
-  return portals.map(({ key, children }, index: number) => (
-    <View
-      key={`portal-${key}-${index}`}
-      collapsable={false}
-      pointerEvents="box-none"
-      style={StyleSheet.absoluteFill}
-    >
-      {children}
-    </View>
-  ));
+  return (
+    <Provider>
+      {portals.map(({ key, children }, index: number) => (
+        <View
+          key={`portal-${key}-${index}`}
+          collapsable={false}
+          pointerEvents="box-none"
+          style={StyleSheet.absoluteFill}
+        >
+          {children}
+        </View>
+      ))}
+    </Provider>
+  );
 };
