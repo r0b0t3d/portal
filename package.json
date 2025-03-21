@@ -87,7 +87,7 @@
     "@types/react": "^18.2.44"
   },
   "dependencies": {
-    "jotai": "^2.12.2"
+    "jotai": "*"
   },
   "peerDependencies": {
     "react": "*",
