@@ -1,3 +1,4 @@
-export function multiply(a: number, b: number): number {
-  return a * b;
-}
+import { Host } from './Host';
+import { Portal } from './Portal';
+
+export { Host, Portal };
