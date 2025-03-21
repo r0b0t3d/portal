@@ -1,7 +1,6 @@
 import * as React from 'react';
-
-import { addUpdatePortalAtom, removePortalAtom } from './Host';
-import { useAtom } from 'jotai';
+import { addPortalAtom, updatePortalAtom, removePortalAtom } from './Host';
+import { useSetAtom } from 'jotai';
 
 interface IPortalProps {
   children: React.ReactNode;
@@ -9,16 +8,25 @@ interface IPortalProps {
 
 let portalKey = 0;
 export const Portal = ({ children }: IPortalProps) => {
-  const key = React.useRef(portalKey++);
-  const [, addUpdatePortal] = useAtom(addUpdatePortalAtom);
-  const [, removePortal] = useAtom(removePortalAtom);
+  const key = React.useRef(0);
+  const addPortal = useSetAtom(addPortalAtom);
+  const updatePortal = useSetAtom(updatePortalAtom);
+  const removePortal = useSetAtom(removePortalAtom);
 
   React.useEffect(() => {
-    addUpdatePortal({ key: key.current.toString(), children });
+    key.current = portalKey++;
+    addPortal({ key: key.current.toString(), children });
     return () => {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
       removePortal(key.current.toString());
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  React.useEffect(() => {
+    if (key.current === 0) {
+      return;
+    }
+    updatePortal({ key: key.current.toString(), children });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [children]);
 

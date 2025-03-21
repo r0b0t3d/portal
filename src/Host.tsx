@@ -3,21 +3,25 @@ import { StyleSheet, View } from 'react-native';
 import { atom, Provider, useAtomValue } from 'jotai';
 
 const portalsAtom = atom<{ key: string; children: React.ReactNode }[]>([]);
-export const addUpdatePortalAtom = atom(
+export const addPortalAtom = atom(
   null,
   (get, set, value: { key: string; children: React.ReactNode }) => {
     const portals = get(portalsAtom);
-    const portal = portals.find((p) => p.key === value.key);
-    if (portal) {
-      set(
-        portalsAtom,
-        portals.map((p) => (p.key === value.key ? value : p))
-      );
-    } else {
-      set(portalsAtom, [...portals, value]);
-    }
+    set(portalsAtom, [...portals, value]);
   }
 );
+
+export const updatePortalAtom = atom(
+  null,
+  (get, set, value: { key: string; children: React.ReactNode }) => {
+    const portals = get(portalsAtom);
+    set(
+      portalsAtom,
+      portals.map((p) => (p.key === value.key ? value : p))
+    );
+  }
+);
+
 export const removePortalAtom = atom(null, (get, set, key: string) => {
   const portals = get(portalsAtom);
   set(
